@@ -1,6 +1,10 @@
 package com.kiit.FirstSpringboot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,11 +61,11 @@ public class ProductController {
 		return "Product Addedd Successfully";
 	}
 	
-	@GetMapping("/getProduct")
-	public Product getProduct()
-	{
-		return productService.getProduct(1);
-	}
+//	@GetMapping("/getProduct")
+//	public Product getProduct()
+//	{
+//		return productService.getProduct(1);
+//	}
 	
 	@PostMapping("/addProductByRequestParam")
 	public String addProductByRequestParam(@RequestParam("ptitle") String title,
@@ -112,10 +116,39 @@ public class ProductController {
 	}
 	
 	@PostMapping("/addProductByRequestBody")
-	public Product addProductByRequestBody(@RequestBody Product product)
+	public ResponseEntity<Product> addProductByRequestBody(@RequestBody Product product)
 	{
 		Product product1=productService.addProduct(product);
-		return product1;
+		return new ResponseEntity<Product>(product1,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/addMultipleProductsByRequestBody")
+	public ResponseEntity<List<Product>> addMultipleProductsByRequestBody(@RequestBody List<Product> products)
+	{
+		List<Product> products1=productService.addMultipleProductsByRequestBody(products);
+		return new ResponseEntity<List<Product>>(products1,HttpStatus.CREATED);
+	}
+	
+	
+	@GetMapping("/getProducts")
+	public List<Product> getProducts()
+	{
+		List<Product> products=productService.getProducts();
+		return products;
+	}
+	
+	@GetMapping("/getProduct")
+	ResponseEntity<Product> getProduct(@RequestParam("pno") int pno)
+	{
+		Product product=productService.getProduct(pno);
+		return new ResponseEntity<Product>(product,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getProduct1/{pno}")
+	ResponseEntity<Product> getProduct1(@PathVariable int pno)
+	{
+		Product product=productService.getProduct(pno);
+		return new ResponseEntity<Product>(product,HttpStatus.OK);
 	}
 	
 }
@@ -127,4 +160,29 @@ public class ProductController {
     "productCategory": "Jewelry",
     "productPrice": 1500.0
  }
+ 
+ 
+ [
+    {
+        "productTitle": "Portable HDD",
+        "productDescription": "WD 2TB Portable HDD",
+        "productCategory": "Electronics",
+        "productPrice": 300.0
+    },
+    {
+       "productTitle": "Portable HDD",
+        "productDescription": "Sandisk 2TB Portable HDD",
+        "productCategory": "Electronics",
+        "productPrice": 350.0
+    },
+    {
+       "productTitle": "TV",
+        "productDescription": "56 inch LED TV Sony",
+        "productCategory": "Electronics",
+        "productPrice": 1500.0
+    }
+    
+ ]
  */
+
+
