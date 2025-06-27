@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -95,4 +96,35 @@ public class ProductController {
 		return "Product Addedd Successfully";
 	}
 	
+	@PostMapping("/addProductByPathVariable1/{title}/{description}/{category}/{price}")
+	public Product addProductByPathVariable1(@PathVariable String title,
+										   @PathVariable String description,
+										   @PathVariable String category,
+										   @PathVariable double price)
+	{
+		Product product=Product.builder()
+				.productCategory(category)
+				.productPrice(price)
+				.productTitle(title)
+				.productDescription(description)
+				.build();
+		return productService.addProduct(product);
+	}
+	
+	@PostMapping("/addProductByRequestBody")
+	public Product addProductByRequestBody(@RequestBody Product product)
+	{
+		Product product1=productService.addProduct(product);
+		return product1;
+	}
+	
 }
+
+/*
+ {
+    "productTitle": "Ring",
+    "productDescription": "Made from 24Karat Gold",
+    "productCategory": "Jewelry",
+    "productPrice": 1500.0
+ }
+ */
