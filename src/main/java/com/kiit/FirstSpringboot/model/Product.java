@@ -29,7 +29,7 @@ public class Product {
 	int productId;
 	
 	@NotNull(message = "Product Title cannot be null") 
-	@Size(min = 3, message = "First name must contain at least 3 characters") 
+	@Size(min = 3, message = "Product Title must contain at least 3 characters") 
 	String productTitle;
 	
 	@NotNull(message = "Product Description cannot be null") 
@@ -37,9 +37,25 @@ public class Product {
 	
 	@NotNull(message = "Product Title cannot be null")
 	String productCategory;
+	
 	@NotNull(message = "Product Price cannot be null") 
 	@Min(value = 100, message = "Product Price must be at least 100") 
 	@Max(value = 5000, message = "Product Price must be less than or equal to 5000") 
 	@Positive
 	double productPrice;
 }
+
+//[
+//{price=90
+//message: Product Price must be at least 100
+//field : productPrice
+//rejectedValue : 90
+//},
+
+//{
+//title : ab
+//message: Product Title must contain at least 3 characters
+//field : productTitle
+//rejectedValue : Ab
+//}
+//]
