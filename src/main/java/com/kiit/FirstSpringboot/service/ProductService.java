@@ -31,4 +31,13 @@ public class ProductService {
 		return productRepository.saveAll(products);
 	}
 
+	public Product updateProduct(int prodId, Product newValue) {
+		Product productFromDb=getProduct(prodId);
+		productFromDb.setProductCategory(newValue.getProductCategory());
+		productFromDb.setProductDescription(newValue.getProductDescription());
+		productFromDb.setProductPrice(newValue.getProductPrice());
+		productFromDb.setProductTitle(newValue.getProductTitle());
+		return productRepository.save(productFromDb);
+	}
+
 }

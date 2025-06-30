@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -167,6 +168,12 @@ public class ProductController {
 		return new ResponseEntity<Product>(product,HttpStatus.OK);
 	}
 	
+	
+	@PutMapping("/updateProduct/{prodId}")
+	public ResponseEntity<Product> updateProduct(@PathVariable int prodId, @RequestBody Product newValue )
+	{
+		return  new ResponseEntity<Product>(productService.updateProduct(prodId,newValue),HttpStatus.OK) ;
+	}
 }
 
 /*
