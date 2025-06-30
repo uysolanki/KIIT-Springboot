@@ -1,14 +1,21 @@
 package com.kiit.FirstSpringboot.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,6 +30,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +51,24 @@ public class Product {
 	@Max(value = 5000, message = "Product Price must be less than or equal to 5000") 
 	@Positive
 	double productPrice;
+	
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+	
+	@PrePersist
+	protected void atCreation()
+	{
+		LocalDateTime now=LocalDateTime.now();
+		this.createdAt=now;
+		this.modifiedAt=now;
+	}
+	
+	@PreUpdate
+	protected void atUpdation()
+	{
+		this.modifiedAt=LocalDateTime.now();
+	}
+
 }
 
 //[
