@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -195,6 +196,28 @@ public class ProductController {
 	{
 		List<Product> productList=productService.getProductByCategoryAndTitle(category,title);
 		return new ResponseEntity<List<Product>>(productList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/searchProduct/{searchString}")
+	ResponseEntity<List<Product>> searchProduct(@PathVariable String searchString)
+	{
+		List<Product> productList=productService.searchProduct(searchString);
+		return new ResponseEntity<List<Product>>(productList,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getProductByPagination/{pageNumber}/{pageSize}")
+	ResponseEntity<Page<Product>> getProductByPagination(@PathVariable int pageNumber,@PathVariable int pageSize)
+	{
+		Page<Product> productPage=productService.getProductByPagination(pageNumber,pageSize);
+		return new ResponseEntity<Page<Product>>(productPage,HttpStatus.OK);
+	}
+	
+
+	@GetMapping("/getProductBySortingAndPagination/{sortingField}/{pageNumber}/{pageSize}")
+	ResponseEntity<Page<Product>> getProductBySortingAndPagination(@PathVariable int pageNumber,@PathVariable int pageSize,@PathVariable String sortingField)
+	{
+		Page<Product> productPage=productService.getProductBySortingAndPagination(sortingField,pageNumber,pageSize);
+		return new ResponseEntity<Page<Product>>(productPage,HttpStatus.OK);
 	}
 }
 
