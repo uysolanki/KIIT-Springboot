@@ -44,4 +44,12 @@ public class ProductService {
 		productRepository.deleteById(prodId);
 	}
 
+	public List<String> getCategories() {
+		return productRepository.getCategories();	
+	}
+
+	public List<Product> getProductByCategoryAndTitle(String category, String title) {
+		return productRepository.getProductsByCategoryAndTitle(category, title);
+	}
+
 }

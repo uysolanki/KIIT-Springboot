@@ -182,6 +182,20 @@ public class ProductController {
 		productService.deleteProduct(prodId);
 		return  new ResponseEntity<String>("Product Deleted with ID "+prodId ,HttpStatus.OK) ;
 	}
+	
+	@GetMapping("/getCategories")
+	ResponseEntity<List<String>> getCategories()
+	{
+		List<String> categories=productService.getCategories();
+		return new ResponseEntity<List<String>>(categories,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getProductByCategoryAndTitle/{category}/{title}")
+	ResponseEntity<List<Product>> getProductByCategoryAndTitle(@PathVariable String category, @PathVariable String title)
+	{
+		List<Product> productList=productService.getProductByCategoryAndTitle(category,title);
+		return new ResponseEntity<List<Product>>(productList,HttpStatus.OK);
+	}
 }
 
 /*
