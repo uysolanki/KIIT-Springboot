@@ -2,12 +2,17 @@ package com.kiit.FirstSpringboot.service;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.kiit.FirstSpringboot.controller.ProductController;
 import com.kiit.FirstSpringboot.model.Product;
 import com.kiit.FirstSpringboot.repository.ProductRepository;
 
@@ -17,7 +22,10 @@ public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
 	
+	private static final Logger logger=Logger.getLogger(ProductService.class);
+	
 	public Product addProduct(Product product) {
+		logger.info("Service Method for Add Product API Request for Product" +product.getProductId());
 		return productRepository.save(product);
 	}
 
@@ -30,8 +38,19 @@ public class ProductService {
 		
 	}
 
+	@Transactional(rollbackFor = ConstraintViolationException.class)
 	public List<Product> addMultipleProductsByRequestBody(List<Product> products) {
-		return productRepository.saveAll(products);
+		List<Product> products1=null;
+		try
+		{
+		products1= productRepository.saveAll(products);
+		productRepository.flush();
+		}
+		catch(Exception e) {
+			System.err.println(e.getClass());
+			throw e;
+		}
+		return products1;
 	}
 
 	public Product updateProduct(int prodId, Product newValue) {

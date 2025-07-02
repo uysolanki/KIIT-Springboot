@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,8 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+	private static final Logger logger=Logger.getLogger(ProductController.class);
 
 	@RequestMapping("/test")
 	public String test(Model model)
@@ -127,6 +130,7 @@ public class ProductController {
 	@PostMapping("/addProductByRequestBody")
 	public ResponseEntity<?> addProductByRequestBody(@RequestBody @Valid Product product,BindingResult bindingResult)
 	{
+		logger.info("Controller Method for Add Product API Request for Product" +product.getProductId());
 		if(bindingResult.hasErrors())
 		{
 			List<APIError> errors = new ArrayList<>();
@@ -138,6 +142,7 @@ public class ProductController {
 			return new  ResponseEntity<List<APIError>>(errors,HttpStatus.BAD_REQUEST);
 		}
 		Product product1=productService.addProduct(product);
+		logger.info("Product Added Successfuly" +product.getProductId());
 		return new ResponseEntity<Product>(product1,HttpStatus.CREATED);
 	}
 	
