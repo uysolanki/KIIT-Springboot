@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kiit.FirstSpringboot.controller.ProductController;
 import com.kiit.FirstSpringboot.model.Product;
 import com.kiit.FirstSpringboot.repository.ProductRepository;
 

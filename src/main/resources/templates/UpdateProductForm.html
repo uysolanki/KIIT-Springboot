@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Player</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Update Player</h3>
+        </div>
+        <div class="card-body">
+             <form th:action="@{/updateProduct/{prodId} (prodId=${product.productId})}" th:object="${product}" method="post">
+                <div class="mb-3">
+                    <label for="productTitle" class="form-label">Product Title</label>
+                    <input type="text" th:field="*{productTitle}" id="productTitle" class="form-control" placeholder="Enter product Title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="productDescription" class="form-label">Product Description</label>
+                    <input type="text" th:field="*{productDescription}" id="productDescription" class="form-control" placeholder="Enter Product Description">
+                </div>
+
+                <div class="mb-3">
+                    <label for="productCategory" class="form-label">Product Category</label>
+                    <input type="text" th:field="*{productCategory}" id="productCategory" class="form-control" placeholder="Enter Product Category">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="productPrice" class="form-label">Product Price</label>
+                    <input type="number" th:field="*{productPrice}" id="productPrice" class="form-control" placeholder="Enter Product Price">
+                </div>
+
+                <button type="submit" class="btn btn-success">Update Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
