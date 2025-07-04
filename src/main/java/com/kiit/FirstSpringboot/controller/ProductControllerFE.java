@@ -63,6 +63,9 @@ public class ProductControllerFE {
 		}
 	}
 	model.addAttribute("products",selectedProducts);
+	List<String> categories=productService.getCategories();
+	categories.add("All");
+	model.addAttribute("categories",categories);
 	return "AllProducts";   //html file - name of the html file
 	}
 	
