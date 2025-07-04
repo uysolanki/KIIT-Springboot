@@ -8,6 +8,24 @@
 <body>
 <div class="container mt-5">
 	<a th:href="@{/addProductForm}" class="btn btn-primary">Add Product</a>
+	
+	<form method="get" action="/searchProducts" id="searchForm" class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" name="title" class="form-control" placeholder="Search by title"
+                   th:value="${param.title}" oninput="document.getElementById('searchForm').submit()"/>
+        </div>
+    </form>
+    
+    <form method="get" action="/filterProducts" id="filterForm" class="row mb-4">
+        <div class="col-md-4">
+            <select name="category" class="form-control" onchange="document.getElementById('filterForm').submit()">
+                <option value="">All Categories</option>
+                <option th:each="cat : ${categories}" th:value="${cat}"
+                        th:text="${cat}" th:selected="${param.category} == ${cat}"></option>
+            </select>
+        </div>
+    </form>
+    
     <h2 class="mb-4">List of Players</h2>
     <table class="table table-bordered table-striped">
         <thead class="table-dark">

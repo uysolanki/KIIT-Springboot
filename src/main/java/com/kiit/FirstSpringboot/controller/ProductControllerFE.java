@@ -41,7 +41,59 @@ public class ProductControllerFE {
 	{
 
 	List<Product> products=productService.getProducts();
+	List<String> categories=productService.getCategories();
+	categories.add("All");
 	model.addAttribute("products", products);
+	model.addAttribute("categories",categories);
+	return "AllProducts";   //html file - name of the html file
+	}
+	
+	@RequestMapping("/searchProducts")
+	public String searchProducts(@RequestParam("title") String title,Model model)
+	{
+
+	List<Product> products=productService.getProducts();
+	List<Product> selectedProducts=new ArrayList();
+	
+	for(Product product:products)
+	{
+		if(product.getProductTitle().toLowerCase().contains(title.toLowerCase()))
+		{
+			selectedProducts.add(product);
+		}
+	}
+	model.addAttribute("products",selectedProducts);
+	return "AllProducts";   //html file - name of the html file
+	}
+	
+	@RequestMapping("/filterProducts")
+	public String filterProducts(@RequestParam("category") String category,Model model)
+	{
+
+	List<Product> products=productService.getProducts();
+	List<Product> filteredProducts=new ArrayList();
+	
+	if(category.equalsIgnoreCase("all"))
+	{
+		model.addAttribute("products",products);
+		List<String> categories=productService.getCategories();
+		categories.add("All");
+		model.addAttribute("products",products);
+		model.addAttribute("categories",categories);
+		return "AllProducts";
+	}
+	
+	for(Product product:products)
+	{
+		if(product.getProductCategory().toLowerCase().contains(category.toLowerCase()))
+		{
+			filteredProducts.add(product);
+		}
+	}
+	model.addAttribute("products",filteredProducts);
+	List<String> categories=productService.getCategories();
+	categories.add("All");
+	model.addAttribute("categories",categories);
 	return "AllProducts";   //html file - name of the html file
 	}
 	
