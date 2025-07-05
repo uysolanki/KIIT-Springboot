@@ -1,4 +1,4 @@
-package com.kiit.FirstSpringboot.controller.config;
+package com.kiit.FirstSpringboot.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
