@@ -1,5 +1,6 @@
 package com.kiit.FirstSpringboot.security;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -44,22 +45,40 @@ public class MyUserDecorator implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		LocalDate accExpDate=user.getAccountExpiryDate();
+		LocalDate todaysDate=LocalDate.now();
+		if(todaysDate.isAfter(accExpDate))
+			return false;
+		else
+			return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		int accLockStatus=user.getAccountLockedStatus();
+				if(accLockStatus==1)
+					return true;
+				else
+					return false;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
+		LocalDate credExpDate=user.getCredentialsExpiryDate();
+				LocalDate todaysDate=LocalDate.now();
+				if(todaysDate.isAfter(credExpDate))
+					return false;
+				else
+					return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		int accEnabledStatus=user.getAccountEnabledStatus();
+				if(accEnabledStatus==1)
+					return true;
+				else
+					return false;
 	}
 
 }

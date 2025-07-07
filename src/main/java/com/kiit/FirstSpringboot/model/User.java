@@ -1,5 +1,6 @@
 package com.kiit.FirstSpringboot.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,12 @@ public class User {
 	int userId;
 	String username;
 	String password;
+
+	LocalDate accountExpiryDate;
+    int accountLockedStatus;  // 1-Acc Unlocked 0-Acc Locked
+    LocalDate credentialsExpiryDate;
+    int accountEnabledStatus;
+	
 	
 	   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	   @JoinTable(
